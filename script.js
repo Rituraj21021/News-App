@@ -1,13 +1,17 @@
+const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Note: For development/testing purposes only
 const API_KEY = "31b2f9950cb9424b85264e523f1362fa";
-const url = "https://newsapi.org/v2/everything?q=" ;
+const url = "https://newsapi.org/v2/everything?q=";
 
-// const API_KEY = "1d3a0eefa97b499d8fbc4ee93eeb40b7";
-// const url = "https://newsapi.org/v2/everything?q=";
 window.addEventListener("load", () => fetchNews("India"));
+
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data = await res.json();
-    bindData(data.articles);
+    try {
+        const res = await fetch(`${proxyUrl}${url}${query}&apiKey=${API_KEY}`);
+        const data = await res.json();
+        bindData(data.articles);
+    } catch (error) {
+        console.error("Failed to fetch news:", error);
+    }
 }
 function bindData(articles) {
     const cardsContainer = document.getElementById("cards-container");
